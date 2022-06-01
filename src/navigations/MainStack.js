@@ -9,7 +9,11 @@ const {Navigator, Screen} = createNativeStackNavigator();
 const MainStack = () => {
   return (
     <Navigator initialRouteName="HomeScreen">
-      <Screen name="HomeScreen" component={HomeScreen} />
+      <Screen
+        name="HomeScreen"
+        options={{title: 'Indicadores'}}
+        component={HomeScreen}
+      />
       <Screen name="ResourceScreen" component={ResourceScreen} />
       <Screen name="DetailScreen" component={DetailScreen} />
     </Navigator>

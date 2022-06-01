@@ -12,11 +12,10 @@ const API_KEY = '8999a45f5d2b4a40b06d9c955c2bb786971601af';
 
 const Detail = ({navigation, route}) => {
   const indicator = route.params.indicator;
+  navigation.setOptions({title: indicator.name.toUpperCase()});
   const [isLoading, setIsLoading] = useState(false);
   const [resources, setResources] = useState([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  console.log('selectedIndex', selectedIndex);
 
   const getResources = () => {
     axios

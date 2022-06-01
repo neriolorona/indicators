@@ -8,8 +8,9 @@ import Resource from '../components/Resource';
 const API_URL = 'https://api.cmfchile.cl/api-sbifv3/recursos_api';
 const API_KEY = '8999a45f5d2b4a40b06d9c955c2bb786971601af';
 
-const Resources = ({route}) => {
+const Resources = ({navigation, route}) => {
   const indicator = route.params.indicator;
+  navigation.setOptions({title: indicator.name.toUpperCase()});
   const [isLoading, setIsLoading] = useState(false);
   const [resources, setResources] = useState([]);
 

@@ -14,10 +14,6 @@ const Detail = ({resources, selectedIndex}) => {
       </Text>
       <View style={styles.row}>
         <Text>Nombre</Text>
-        <Text>{resource.name}</Text>
-      </View>
-      <View style={styles.row}>
-        <Text>Titulo</Text>
         <Text>{resource.title}</Text>
       </View>
       <View style={styles.row}>
@@ -50,5 +46,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
     color: Colors.blue700,
+    marginBottom: 8,
   },
 });
