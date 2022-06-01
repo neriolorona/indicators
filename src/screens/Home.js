@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import Empty from '../components/Empty';
 import Loading from '../components/Loading';
 import Indicator from '../components/Indicator';
+import {Colors} from 'react-native-paper';
 
 import api from '../api/indicator';
 
@@ -51,5 +52,6 @@ export default Home;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.white,
   },
 });

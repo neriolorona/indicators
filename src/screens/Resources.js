@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, FlatList, Alert} from 'react-native';
+import {StyleSheet, View, FlatList, Alert} from 'react-native';
 import Loading from '../components/Loading';
 import Empty from '../components/Empty';
 import Resource from '../components/Resource';
@@ -37,6 +37,7 @@ const Resources = ({route}) => {
 
   const renderItem = ({item}) => <Resource resource={item} />;
   const renderEmpty = () => <Empty />;
+  const renderSeparator = () => <View style={styles.separator} />;
 
   const renderContent = () => {
     if (isLoading) {
@@ -49,6 +50,7 @@ const Resources = ({route}) => {
         data={resources}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
+        ItemSeparatorComponent={renderSeparator}
       />
     );
   };
@@ -62,5 +64,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  separator: {
+    height: 4,
   },
 });
