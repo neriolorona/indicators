@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {StyleSheet, View, FlatList, Platform} from 'react-native';
 import Empty from '../components/Empty';
 import Loading from '../components/Loading';
 import Indicator from '../components/Indicator';
 import {Colors} from 'react-native-paper';
+import {request, PERMISSIONS} from 'react-native-permissions';
 
 import api from '../api/indicator';
 
@@ -20,8 +21,34 @@ const Home = ({navigation}) => {
     }
   };
 
+  const getLocationPermission = useCallback(async () => {
+    if (Platform.OS === 'ios') {
+      var response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+      console.log('Permission in ios ' + response);
+
+      if (response === 'granted') {
+        console.log('permiso otorgado en iOS');
+      } else {
+        console.log('permiso no concedido en iOS');
+      }
+    } else {
+      var response = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+      console.log('Permissions in android ' + response);
+
+      if (response === 'granted') {
+        console.log('permiso otorgado en Android');
+      } else {
+        console.log('permiso otorgado en Android');
+      }
+    }
+  }, []);
+
   useEffect(() => {
     getIndicators();
+  }, []);
+
+  useEffect(() => {
+    getLocationPermission();
   }, []);
 
   const goResourceScreen = indicator =>
