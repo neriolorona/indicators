@@ -2,18 +2,18 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from 'react-native-paper';
 
-const Detail = ({resources, selectedIndex}) => {
+const Detail = ({resources, selectedIndex, indicator}) => {
   const resource = resources[selectedIndex];
   return (
     <View style={styles.container}>
       <Text style={styles.valor}>
-        {resource.unit === 'Pesos' ? '$' : ''}
+        {indicator.unit === 'Pesos' ? '$' : ''}
         {resource.Valor}
-        {resource.unit === 'Porcentaje' ? '%' : ''}
+        {indicator.unit === 'Porcentaje' ? '%' : ''}
       </Text>
       <View style={styles.row}>
         <Text>Nombre</Text>
-        <Text>{resource.title}</Text>
+        <Text>{indicator.title}</Text>
       </View>
       <View style={styles.row}>
         <Text>Fecha</Text>
@@ -21,7 +21,7 @@ const Detail = ({resources, selectedIndex}) => {
       </View>
       <View style={styles.row}>
         <Text>Unidad de medida</Text>
-        <Text>{resource.unit}</Text>
+        <Text>{indicator.unit}</Text>
       </View>
     </View>
   );

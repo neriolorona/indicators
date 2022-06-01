@@ -1,37 +1,43 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Alert} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Colors} from 'react-native-paper';
 import DetailResource from '../components/Detail';
 import LineChart from '../components/LineChart';
 import Loading from '../components/Loading';
 import Empty from '../components/Empty';
-import {getDetail} from '../redux/slices/resource';
-import {useDispatch, useSelector} from 'react-redux';
+import useResources from '../hooks/useResources';
 
 const Detail = ({navigation, route}) => {
   const indicator = route.params.indicator;
-  navigation.setOptions({title: indicator.name.toUpperCase()});
-  const dispatch = useDispatch();
-  const {isLoading, detail} = useSelector(state => state.resource);
+  navigation.setOptions({
+    title:
+      indicator.name.substring(0, 1).toUpperCase() +
+      indicator.name.substring(1),
+  });
+  const {isLoading, data} = useResources({indicator, limit: 10});
   const [selectedIndex, setSelectedIndex] = useState(0);
-
-  useEffect(() => {
-    dispatch(getDetail(indicator));
-  }, [dispatch, indicator]);
 
   const renderContent = () => {
     if (isLoading) {
       return <Loading />;
     }
 
-    if (detail.length === 0) {
+    if (data.length === 0) {
       return <Empty />;
     }
 
     return (
       <>
-        <DetailResource resources={detail} selectedIndex={selectedIndex} />
-        <LineChart resources={detail} setSelectedIndex={setSelectedIndex} />
+        <DetailResource
+          resources={data}
+          selectedIndex={selectedIndex}
+          indicator={indicator}
+        />
+        <LineChart
+          resources={data}
+          setSelectedIndex={setSelectedIndex}
+          indicator={indicator}
+        />
       </>
     );
   };

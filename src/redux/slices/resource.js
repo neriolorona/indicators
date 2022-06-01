@@ -8,7 +8,6 @@ const initialState = {
   isLoading: false,
   error: false,
   resources: [],
-  detail: [],
 };
 
 const slice = createSlice({
@@ -28,10 +27,6 @@ const slice = createSlice({
       state.isLoading = false;
       state.resources = action.payload;
     },
-    setDetail(state, action) {
-      state.isLoading = false;
-      state.detail = action.payload;
-    },
   },
 });
 
@@ -39,7 +34,7 @@ const slice = createSlice({
 export default slice.reducer;
 
 //Actions
-export const {} = slice.actions;
+export const {setResources} = slice.actions;
 
 //Functions
 export function getResources(indicator) {
@@ -52,33 +47,6 @@ export function getResources(indicator) {
       .then(response => {
         const [list] = Object.values(response.data);
         dispatch(slice.actions.setResources(list.reverse()));
-      })
-      .catch(err => {
-        dispatch(slice.actions.setError(err));
-      });
-  };
-}
-
-export function getDetail(indicator) {
-  return dispatch => {
-    dispatch(slice.actions.startLoading());
-    axios
-      .get(
-        `${API_URL}/${indicator.name}/posteriores/2020?apikey=${API_KEY}&formato=json`,
-      )
-      .then(response => {
-        const [list] = Object.values(response.data);
-        const sliced = list.reverse().slice(0, 10);
-        const updated = sliced.map(item => {
-          return {
-            ...item,
-            name: indicator.name,
-            title: indicator.title,
-            unit: indicator.unit,
-            indicatorId: indicator.id,
-          };
-        });
-        dispatch(slice.actions.setDetail(updated));
       })
       .catch(err => {
         dispatch(slice.actions.setError(err));

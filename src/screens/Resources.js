@@ -1,35 +1,21 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import Loading from '../components/Loading';
 import Empty from '../components/Empty';
 import Resource from '../components/Resource';
-import {getResources} from '../redux/slices/resource';
-import {useDispatch, useSelector} from 'react-redux';
+import useResources from '../hooks/useResources';
 
 const Resources = ({navigation, route}) => {
   const indicator = route.params.indicator;
-  navigation.setOptions({title: indicator.name.toUpperCase()});
-  const dispatch = useDispatch();
-  const {isLoading, resources} = useSelector(state => state.resource);
-  const [data, setData] = useState([]);
-
-  const getMore = useCallback(() => {
-    const newData = resources.slice(data.length, data.length + 30);
-    if (newData.length > 0) {
-      const updatedData = [...data, ...newData];
-      setData(updatedData);
-    }
-  }, [resources, data]);
-
-  useEffect(() => {
-    dispatch(getResources(indicator));
-  }, [dispatch, indicator]);
-
-  useEffect(() => {
-    if (resources.length > 0) {
-      setData(resources.slice(0, 30));
-    }
-  }, [resources]);
+  navigation.setOptions({
+    title:
+      indicator.name.substring(0, 1).toUpperCase() +
+      indicator.name.substring(1),
+  });
+  const {isLoading, data, getMore} = useResources({
+    indicator,
+    limit: 30,
+  });
 
   const renderItem = ({item}) => (
     <Resource resource={item} indicator={indicator} />
