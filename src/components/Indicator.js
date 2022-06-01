@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {List, IconButton, Colors} from 'react-native-paper';
 
-const Indicator = ({indicator, goResourceScreen}) => {
+const Indicator = ({indicator, goResourceScreen, goDetailScreen}) => {
   return (
     <List.Item
       style={styles.container}
@@ -17,14 +17,9 @@ const Indicator = ({indicator, goResourceScreen}) => {
             icon="information-outline"
             color={Colors.blue500}
             size={20}
-            onPress={() => console.log('Pressed')}
+            onPress={() => goDetailScreen(indicator)}
           />
-          <IconButton
-            icon="chevron-right"
-            color={Colors.grey500}
-            size={20}
-            onPress={() => console.log('Pressed')}
-          />
+          <IconButton icon="chevron-right" color={Colors.grey500} size={20} />
         </View>
       )}
     />

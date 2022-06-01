@@ -26,8 +26,14 @@ const Home = ({navigation}) => {
 
   const goResourceScreen = indicator =>
     navigation.navigate('ResourceScreen', {indicator: indicator});
+  const goDetailScreen = indicator =>
+    navigation.navigate('DetailScreen', {indicator: indicator});
   const renderItem = ({item}) => (
-    <Indicator indicator={item} goResourceScreen={goResourceScreen} />
+    <Indicator
+      indicator={item}
+      goResourceScreen={goResourceScreen}
+      goDetailScreen={goDetailScreen}
+    />
   );
   const renderEmpty = () => <Empty />;
 
