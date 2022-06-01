@@ -3,7 +3,6 @@ import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from 'react-native-paper';
 
 const Detail = ({resources, selectedIndex}) => {
-  console.log(resources);
   const resource = resources[selectedIndex];
   return (
     <View style={styles.container}>

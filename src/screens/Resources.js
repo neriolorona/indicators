@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, View, FlatList, Alert} from 'react-native';
 import Loading from '../components/Loading';
 import Empty from '../components/Empty';
@@ -13,6 +13,15 @@ const Resources = ({navigation, route}) => {
   navigation.setOptions({title: indicator.name.toUpperCase()});
   const [isLoading, setIsLoading] = useState(false);
   const [resources, setResources] = useState([]);
+  const [data, setData] = useState([]);
+
+  const getMore = useCallback(() => {
+    const newData = resources.slice(data.length, data.length + 30);
+    if (newData.length > 0) {
+      const updatedData = [...data, ...newData];
+      setData(updatedData);
+    }
+  }, [resources, data]);
 
   const getResources = () => {
     setIsLoading(true);
@@ -21,8 +30,8 @@ const Resources = ({navigation, route}) => {
         `${API_URL}/${indicator.name}/posteriores/2020?apikey=${API_KEY}&formato=json`,
       )
       .then(response => {
-        const [data] = Object.values(response.data);
-        setResources(data.reverse());
+        const [list] = Object.values(response.data);
+        setResources(list.reverse());
         setIsLoading(false);
       })
       .catch(err => {
@@ -35,6 +44,12 @@ const Resources = ({navigation, route}) => {
   useEffect(() => {
     getResources();
   }, []);
+
+  useEffect(() => {
+    if (resources.length > 0) {
+      setData(resources.slice(0, 30));
+    }
+  }, [resources]);
 
   const renderItem = ({item}) => (
     <Resource resource={item} indicator={indicator} />
@@ -50,10 +65,12 @@ const Resources = ({navigation, route}) => {
     return (
       <FlatList
         style={styles.container}
-        data={resources}
+        data={data}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ItemSeparatorComponent={renderSeparator}
+        onEndReached={getMore}
+        onEndReachedThreshold={1}
       />
     );
   };
