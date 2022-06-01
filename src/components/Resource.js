@@ -2,11 +2,15 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from 'react-native-paper';
 
-const Resource = ({resource}) => {
+const Resource = ({resource, indicator}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.date}>{resource.Fecha}</Text>
-      <Text>{resource.Valor}</Text>
+      <Text>
+        {indicator.unit === 'Pesos' ? '$' : ''}
+        {resource.Valor}
+        {indicator.unit === 'Porcentaje' ? '%' : ''}
+      </Text>
     </View>
   );
 };

@@ -2,11 +2,16 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {Colors} from 'react-native-paper';
 
-const Detail = ({resource}) => {
-  console.log(resource);
+const Detail = ({resources, selectedIndex}) => {
+  console.log(resources);
+  const resource = resources[selectedIndex];
   return (
     <View style={styles.container}>
-      <Text style={styles.valor}>{resource.Valor}</Text>
+      <Text style={styles.valor}>
+        {resource.unit === 'Pesos' ? '$' : ''}
+        {resource.Valor}
+        {resource.unit === 'Porcentaje' ? '%' : ''}
+      </Text>
       <View style={styles.row}>
         <Text>Nombre</Text>
         <Text>{resource.name}</Text>

@@ -14,6 +14,9 @@ const Detail = ({navigation, route}) => {
   const indicator = route.params.indicator;
   const [isLoading, setIsLoading] = useState(false);
   const [resources, setResources] = useState([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  console.log('selectedIndex', selectedIndex);
 
   const getResources = () => {
     axios
@@ -57,8 +60,8 @@ const Detail = ({navigation, route}) => {
 
     return (
       <>
-        <DetailResource resource={resources[0]} />
-        <LineChart resources={resources} />
+        <DetailResource resources={resources} selectedIndex={selectedIndex} />
+        <LineChart resources={resources} setSelectedIndex={setSelectedIndex} />
       </>
     );
   };

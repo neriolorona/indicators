@@ -35,7 +35,9 @@ const Resources = ({route}) => {
     getResources();
   }, []);
 
-  const renderItem = ({item}) => <Resource resource={item} />;
+  const renderItem = ({item}) => (
+    <Resource resource={item} indicator={indicator} />
+  );
   const renderEmpty = () => <Empty />;
   const renderSeparator = () => <View style={styles.separator} />;
 

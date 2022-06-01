@@ -5,10 +5,10 @@ import {Colors} from 'react-native-paper';
 
 const WIDTH_SCREEN = Dimensions.get('window').width;
 
-const LineChartComponent = ({resources}) => {
+const LineChartComponent = ({resources, setSelectedIndex}) => {
   const dates = resources.map(item => item.Fecha);
   const values = resources.map(item => parseFloat(item.Valor));
-  console.log('values', values);
+  const unit = resources[0].unit;
 
   return (
     <View>
@@ -23,15 +23,16 @@ const LineChartComponent = ({resources}) => {
         }}
         width={WIDTH_SCREEN}
         height={280}
-        yAxisLabel="$"
-        yAxisInterval={1} // optional, defaults to 1
-        onDataPointClick={index => console.log('Hiciste click en este', index)}
+        yAxisLabel={unit === 'Pesos' ? '$' : ''}
+        yAxisSuffix={unit === 'Porcentaje' ? '%' : ''}
+        yAxisInterval={1}
+        onDataPointClick={event => setSelectedIndex(event.index)}
         formatXLabel={valueX => valueX.substring(8, 10)}
         chartConfig={{
           backgroundColor: Colors.blue500,
           backgroundGradientFrom: Colors.blue500,
           backgroundGradientTo: Colors.blue700,
-          decimalPlaces: 2, // optional, defaults to 2dp
+          decimalPlaces: 2,
           color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
           style: {
