@@ -2,14 +2,14 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {List, IconButton, Colors} from 'react-native-paper';
 
-const Indicator = ({name, title, unit}) => {
+const Indicator = ({indicator, goResourceScreen}) => {
   return (
     <List.Item
       style={styles.container}
-      onPress={() => console.log('elegiste algo')}
-      title={title}
+      onPress={() => goResourceScreen(indicator)}
+      title={indicator.title}
       titleStyle={styles.title}
-      description={unit}
+      description={indicator.unit}
       descriptionStyle={styles.description}
       right={() => (
         <View style={styles.row}>

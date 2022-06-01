@@ -6,7 +6,7 @@ import Indicator from '../components/Indicator';
 
 import api from '../api/indicator';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [indicators, setIndicators] = useState([]);
 
@@ -23,7 +23,11 @@ const Home = () => {
     getIndicators();
   }, []);
 
-  const renderItem = ({item}) => <Indicator {...item} />;
+  const goResourceScreen = indicator =>
+    navigation.navigate('ResourceScreen', {indicator: indicator});
+  const renderItem = ({item}) => (
+    <Indicator indicator={item} goResourceScreen={goResourceScreen} />
+  );
   const renderEmpty = () => <Empty />;
 
   const renderContent = () => {
