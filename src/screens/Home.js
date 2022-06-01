@@ -1,25 +1,16 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback} from 'react';
 import {StyleSheet, View, FlatList, Platform} from 'react-native';
 import Empty from '../components/Empty';
 import Loading from '../components/Loading';
 import Indicator from '../components/Indicator';
 import {Colors} from 'react-native-paper';
 import {request, PERMISSIONS} from 'react-native-permissions';
-
-import api from '../api/indicator';
+import {getIndicators} from '../redux/slices/indicator';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Home = ({navigation}) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [indicators, setIndicators] = useState([]);
-
-  const getIndicators = async () => {
-    setIsLoading(true);
-    const data = await api.list();
-    if (data) {
-      setIndicators(data);
-      setIsLoading(false);
-    }
-  };
+  const dispatch = useDispatch();
+  const {indicators, isLoading} = useSelector(state => state.indicator);
 
   const getLocationPermission = useCallback(async () => {
     if (Platform.OS === 'ios') {
@@ -44,12 +35,12 @@ const Home = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    getIndicators();
-  }, []);
+    dispatch(getIndicators());
+  }, [dispatch]);
 
   useEffect(() => {
     getLocationPermission();
-  }, []);
+  }, [getLocationPermission]);
 
   const goResourceScreen = indicator =>
     navigation.navigate('ResourceScreen', {indicator: indicator});

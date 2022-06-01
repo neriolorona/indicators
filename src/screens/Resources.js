@@ -1,18 +1,16 @@
-import axios from 'axios';
 import React, {useState, useEffect, useCallback} from 'react';
-import {StyleSheet, View, FlatList, Alert} from 'react-native';
+import {StyleSheet, View, FlatList} from 'react-native';
 import Loading from '../components/Loading';
 import Empty from '../components/Empty';
 import Resource from '../components/Resource';
-
-const API_URL = 'https://api.cmfchile.cl/api-sbifv3/recursos_api';
-const API_KEY = '8999a45f5d2b4a40b06d9c955c2bb786971601af';
+import {getResources} from '../redux/slices/resource';
+import {useDispatch, useSelector} from 'react-redux';
 
 const Resources = ({navigation, route}) => {
   const indicator = route.params.indicator;
   navigation.setOptions({title: indicator.name.toUpperCase()});
-  const [isLoading, setIsLoading] = useState(false);
-  const [resources, setResources] = useState([]);
+  const dispatch = useDispatch();
+  const {isLoading, resources} = useSelector(state => state.resource);
   const [data, setData] = useState([]);
 
   const getMore = useCallback(() => {
@@ -23,27 +21,9 @@ const Resources = ({navigation, route}) => {
     }
   }, [resources, data]);
 
-  const getResources = () => {
-    setIsLoading(true);
-    axios
-      .get(
-        `${API_URL}/${indicator.name}/posteriores/2020?apikey=${API_KEY}&formato=json`,
-      )
-      .then(response => {
-        const [list] = Object.values(response.data);
-        setResources(list.reverse());
-        setIsLoading(false);
-      })
-      .catch(err => {
-        Alert.alert('Sucedió un error al traer los recursos del indicador');
-        console.log(err);
-        setIsLoading(false);
-      });
-  };
-
   useEffect(() => {
-    getResources();
-  }, []);
+    dispatch(getResources(indicator));
+  }, [dispatch, indicator]);
 
   useEffect(() => {
     if (resources.length > 0) {
