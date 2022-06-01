@@ -1,14 +1,21 @@
-import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {ActivityIndicator, Colors} from 'react-native-paper';
 
 const Loading = () => {
   return (
-    <View>
-      <Text>Cargando...</Text>
+    <View style={styles.container}>
+      <ActivityIndicator animating={true} color={Colors.grey500} />
     </View>
   );
 };
 
 export default Loading;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
