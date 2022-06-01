@@ -16,9 +16,15 @@ This project was tested successfully in Android simulator and iOS simulator.
 
 # Installation
 
-- After download from this repository, install dependencies: yarn install
-- for run in iOS: npx react-native run-ios
-- for run in Android: npx react-native run-android
+- After download from this repository, install dependencies:
+  - yarn install
+  - npm install
+- for run in iOS
+  - npx react-native run-ios
+  - react-native run-ios
+- for run in Android
+  - npx react-native run-android
+  - react-native run-android
     
 # Tools Versions
 
