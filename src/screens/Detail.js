@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, Alert} from 'react-native';
 import axios from 'axios';
-import DetailResource from '../components/Detail';
 import {Colors} from 'react-native-paper';
+import DetailResource from '../components/Detail';
+import LineChart from '../components/LineChart';
+import Loading from '../components/Loading';
+import Empty from '../components/Empty';
 
 const API_URL = 'https://api.cmfchile.cl/api-sbifv3/recursos_api';
 const API_KEY = '8999a45f5d2b4a40b06d9c955c2bb786971601af';
@@ -43,11 +46,24 @@ const Detail = ({navigation, route}) => {
     getResources();
   }, []);
 
-  return (
-    <View style={styles.container}>
-      <DetailResource resource={resources[0]} />
-    </View>
-  );
+  const renderContent = () => {
+    if (isLoading) {
+      return <Loading />;
+    }
+
+    if (resources.length === 0) {
+      return <Empty />;
+    }
+
+    return (
+      <>
+        <DetailResource resource={resources[0]} />
+        <LineChart resources={resources} />
+      </>
+    );
+  };
+
+  return <View style={styles.container}>{renderContent()}</View>;
 };
 
 export default Detail;
