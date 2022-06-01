@@ -32,6 +32,7 @@ export default Detail;
 const styles = StyleSheet.create({
   container: {
     marginTop: 16,
+    marginBottom: 20,
   },
   row: {
     flexDirection: 'row',

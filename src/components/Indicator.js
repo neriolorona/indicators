@@ -5,6 +5,7 @@ import {List, IconButton, Colors} from 'react-native-paper';
 const Indicator = ({indicator, goResourceScreen, goDetailScreen}) => {
   return (
     <List.Item
+      divider
       style={styles.container}
       onPress={() => goResourceScreen(indicator)}
       title={indicator.title}
@@ -29,7 +30,10 @@ const Indicator = ({indicator, goResourceScreen, goDetailScreen}) => {
 export default Indicator;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.grey200,
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

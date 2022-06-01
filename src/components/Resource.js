@@ -24,6 +24,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 16,
+    borderBottomWidth: 0.5,
+    borderBottomColor: Colors.grey200,
   },
   date: {
     color: Colors.blue500,
